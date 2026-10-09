@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>单元测试 · 校园失物招领</title>
+<link rel="stylesheet" href="lib/mocha.css">
+<style>
+  body { font-family: "PingFang SC", "Microsoft YaHei", system-ui, sans-serif; background: #fff; }
+  #intro { max-width: 900px; margin: 20px auto 0; padding: 14px 18px; border-radius: 10px;
+           background: #eef4ff; border: 1px solid #c7dbff; color: #1d4ed8; font-size: 13px; line-height: 1.7; }
+  #intro b { font-size: 14px; }
+  #intro code { background: #fff; padding: 1px 5px; border-radius: 4px; border: 1px solid #c7dbff; }
+  #mocha { margin-top: 10px; }
+  #mocha h1 { font-size: 15px; }
+  #mocha .suite { margin-left: 4px; }
+</style>
+</head>
+<body>
+
+<div id="intro">
+  <b>校园失物招领 · 单元测试</b><br>
+  这个页面<b>双击就能跑</b>，不需要装 Node、不需要起服务器、不需要联网。<br>
+  被测代码是 <code>js/config.js</code>、<code>js/utils.js</code>、<code>js/seed.js</code>、<code>js/store.js</code>——
+  它们不依赖 DOM，所以能被直接引用。用例在 <code>test/specs/</code> 下，按被测模块分文件。<br>
+  跑完之后，<code>&lt;html&gt;</code> 上会写入 <code>data-selftest="PASS|passing=N|failing=N"</code>，方便命令行检查。
+</div>
+
+<div id="mocha"></div>
+
+<!-- 测试框架（随仓库提交，离线可用） -->
+<script src="lib/mocha.js"></script>
+<script src="lib/chai.js"></script>
+<script>
+  mocha.setup({ ui: 'bdd', reporter: 'html', timeout: 4000 });
+  window.chai = chai;
+</script>
+
+<!-- 被测代码 -->
+<script src="../js/config.js"></script>
+<script src="../js/utils.js"></script>
+<script src="../js/seed.js"></script>
+<script src="../js/store.js"></script>
+
+<!-- 夹具（必须先于各 spec 加载） -->
+<script src="specs/fixtures.js"></script>
+
+<!-- 用例 -->
+<script src="specs/validate.spec.js"></script>
+<script src="specs/query.spec.js"></script>
+<script src="specs/privacy.spec.js"></script>
+<script src="specs/verify.spec.js"></script>
+<script src="specs/status.spec.js"></script>
+<script src="specs/storage.spec.js"></script>
+<script src="specs/main-flow.spec.js"></script>
+
+<script>
+  (function () {
+    var root = document.documentElement;
+    try {
+      var runner = mocha.run(function (failures) {
+        root.setAttribute('data-selftest',
+          (failures ? 'FAIL' : 'PASS') + '|passing=' + runner.stats.passes + '|failing=' + runner.stats.failures);
+        document.title = (failures ? '❌ ' : '✅ ') + runner.stats.passes + ' passing · 校园失物招领 单元测试';
+      });
+    } catch (e) {
+      root.setAttribute('data-selftest', 'ERROR|' + (e && e.message ? e.message : 'unknown'));
+      document.body.insertAdjacentHTML('beforeend',
+        '<pre style="color:#c00;padding:20px">测试运行器启动失败：' + (e && e.message ? e.message : e) + '</pre>');
+    }
+  })();
+</script>
+
+</body>
+</html>
