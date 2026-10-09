@@ -1,0 +1,154 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing: border-box;
+    font-family: "Microsoft Yahei", sans-serif;
+}
+body{
+    background-color: #f5f7fa;
+    color:#333;
+}
+.navbar{
+    background-color: #2b78e4;
+    color:#fff;
+    padding:1rem;
+    display:flex;
+    justify-content: space-between;
+    align-items:center;
+}
+.nav-title{
+    font-size:1.2rem;
+    font-weight:bold;
+}
+.nav-menu a{
+    color:#fff;
+    text-decoration:none;
+    margin-left:1rem;
+}
+.container{
+    max-width:800px;
+    margin:0 auto;
+    padding:1rem;
+}
+.search-area{
+    display:flex;
+    gap:8px;
+    margin:1rem 0;
+}
+#search-input{
+    flex:1;
+    padding:0.6rem;
+    border:1px solid #ccc;
+    border-radius:4px;
+}
+#search-btn{
+    padding:0.6rem 1rem;
+    background:#2b78e4;
+    color:white;
+    border:none;
+    border-radius:4px;
+    cursor:pointer;
+}
+.tab-wrap{
+    display:flex;
+    gap:8px;
+    margin-bottom:1rem;
+}
+.tab-item{
+    padding:0.5rem 1rem;
+    border:1px solid #2b78e4;
+    background:#fff;
+    color:#2b78e4;
+    border-radius:4px;
+    cursor:pointer;
+}
+.tab-item.active{
+    background:#2b78e4;
+    color:#fff;
+}
+.list-wrap{
+    display:flex;
+    flex-direction:column;
+    gap:1rem;
+}
+.card-item{
+    background:#fff;
+    padding:1rem;
+    border-radius:6px;
+    box-shadow: 0 1px 3px #ddd;
+}
+.empty-tip{
+    text-align:center;
+    padding:3rem;
+    color:#888;
+}
+.status-tag{
+    display:inline-block;
+    padding:2px 6px;
+    border-radius:3px;
+    font-size:0.8rem;
+    margin-left:8px;
+}
+.status-ongoing{
+    background:#fff3cd;
+    color:#856404;
+}
+.status-done{
+    background:#d1e7dd;
+    color:#0f5132;
+}
+.form-wrap{
+    background:#fff;
+    padding:1.5rem;
+    border-radius:6px;
+}
+.form-item{
+    margin-bottom:1rem;
+}
+.form-item label{
+    display:block;
+    margin-bottom:0.4rem;
+}
+.form-item input,.form-item textarea,.form-item select{
+    width:100%;
+    padding:0.6rem;
+    border:1px solid #ccc;
+    border-radius:4px;
+}
+.submit-btn{
+    width:100%;
+    padding:0.8rem;
+    background:#2b78e4;
+    color:white;
+    border:none;
+    border-radius:4px;
+    font-size:1rem;
+    cursor:pointer;
+}
+.detail-box{
+    background:#fff;
+    padding:1.5rem;
+    border-radius:6px;
+}
+.detail-box p{
+    margin:0.6rem 0;
+}
+.operate-btn{
+    margin-top:1.5rem;
+    display:flex;
+    gap:10px;
+}
+.operate-btn button{
+    padding:0.6rem 1rem;
+    border:none;
+    border-radius:4px;
+    cursor:pointer;
+}
+.btn-back{
+    background:#6c757d;
+    color:#fff;
+}
+.btn-mark{
+    background:#198754;
+    color:#fff;
+}

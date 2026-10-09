@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>校园失物招领</title>
+    <link rel="stylesheet" href="./css/style.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-title">校园失物招领</div>
+        <div class="nav-menu">
+            <a href="index.html">首页</a>
+            <a href="publish.html">发布信息</a>
+        </div>
+    </nav>
+    <main class="container">
+        <div class="search-area">
+            <input type="text" id="search-input" placeholder="输入物品名称搜索...">
+            <button id="search-btn">搜索</button>
+        </div>
+        <div class="tab-wrap">
+            <button class="tab-item active" data-type="all">全部</button>
+            <button class="tab-item" data-type="lost">寻物</button>
+            <button class="tab-item" data-type="found">招领</button>
+        </div>
+        <div id="list-wrap" class="list-wrap">
+            <!-- 物品卡片JS渲染 -->
+            <div class="empty-tip">暂无失物招领信息</div>
+        </div>
+    </main>
+    <script src="./js/data.js"></script>
+    <script src="./js/index.js"></script>
+</body>
+</html>
