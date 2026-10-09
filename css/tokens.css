@@ -1,0 +1,136 @@
+/*!
+ * tokens.css —— 设计令牌（色板、圆角、阴影、字号、间距）
+ *
+ * 全站的颜色和尺寸只在这一个文件里定义，页面和组件都引用变量。
+ * 这样换主题、调圆角不用满仓库找硬编码的颜色值。
+ */
+
+:root {
+  /* ---- 品牌色 ---- */
+  --c-primary: #2b6cf6;
+  --c-primary-dark: #1d4ed8;
+  --c-primary-soft: #eef4ff;
+  --c-primary-line: #c7dbff;
+
+  /* ---- 语义色：寻物（着急，暖色）/ 招领（稳，冷绿）/ 已完成（沉底，灰） ---- */
+  --c-lost: #d97706;
+  --c-lost-soft: #fff5e6;
+  --c-lost-line: #ffdca8;
+
+  --c-found: #0f9d76;
+  --c-found-soft: #e6f7f2;
+  --c-found-line: #a8e3d3;
+
+  --c-done: #7b8698;
+  --c-done-soft: #f0f2f6;
+  --c-done-line: #dfe4ec;
+
+  --c-danger: #dc3545;
+  --c-danger-soft: #fdecee;
+  --c-warn: #b45309;
+  --c-warn-soft: #fff8e6;
+  --c-warn-line: #ffe1a3;
+  --c-ok: #0f9d76;
+
+  /* ---- 中性色 ---- */
+  --c-text: #1b2434;
+  --c-text-2: #55607a;
+  --c-text-3: #8b95a8;
+  --c-text-4: #aab2c0;
+  --c-border: #e4e9f2;
+  --c-border-2: #eef1f7;
+  --c-bg: #f3f6fb;
+  --c-surface: #ffffff;
+  --c-surface-2: #fafbfe;
+
+  /* ---- 圆角 ---- */
+  --r-xs: 6px;
+  --r-sm: 8px;
+  --r-md: 12px;
+  --r-lg: 16px;
+  --r-full: 999px;
+
+  /* ---- 阴影 ---- */
+  --sh-1: 0 1px 2px rgba(22, 34, 58, .06);
+  --sh-2: 0 2px 6px rgba(22, 34, 58, .06), 0 10px 28px rgba(22, 34, 58, .06);
+  --sh-3: 0 12px 40px rgba(22, 34, 58, .16);
+
+  /* ---- 字号 ---- */
+  --f-xs: 12px;
+  --f-sm: 13px;
+  --f-md: 14px;
+  --f-lg: 16px;
+  --f-xl: 19px;
+  --f-2xl: 24px;
+  --f-3xl: 30px;
+
+  /* ---- 间距 ---- */
+  --sp-1: 4px;
+  --sp-2: 8px;
+  --sp-3: 12px;
+  --sp-4: 16px;
+  --sp-5: 20px;
+  --sp-6: 24px;
+  --sp-8: 32px;
+  --sp-10: 40px;
+
+  --nav-h: 60px;
+  --tab-h: 58px;
+  --page-max: 1080px;
+}
+
+/* ============================================================
+ * 基础重置与排版
+ * ============================================================ */
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  font-family: "PingFang SC", "Microsoft YaHei", "Hiragino Sans GB", "Source Han Sans SC",
+    system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  font-size: var(--f-md);
+  line-height: 1.6;
+  color: var(--c-text);
+  background: var(--c-bg);
+  /* 移动端底部有固定 tab 栏，给内容留出空间，避免最后一张卡片被挡住 */
+  padding-bottom: calc(var(--tab-h) + env(safe-area-inset-bottom, 0px));
+}
+
+h1, h2, h3, h4 { line-height: 1.35; font-weight: 700; }
+h1 { font-size: var(--f-2xl); }
+h2 { font-size: var(--f-xl); }
+h3 { font-size: var(--f-lg); }
+
+a { color: var(--c-primary); text-decoration: none; }
+a:hover { color: var(--c-primary-dark); }
+
+img { max-width: 100%; display: block; }
+
+input, select, textarea, button { font: inherit; color: inherit; }
+
+ul, ol { list-style: none; }
+
+mark.hl {
+  background: #fff1a8;
+  color: inherit;
+  padding: 0 1px;
+  border-radius: 2px;
+}
+
+/* 焦点可见性：键盘用户也要能看出焦点在哪 */
+:focus-visible {
+  outline: 2px solid var(--c-primary);
+  outline-offset: 2px;
+}
+
+.sr-only {
+  position: absolute; width: 1px; height: 1px;
+  padding: 0; margin: -1px; overflow: hidden;
+  clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation-duration: .001ms !important; transition-duration: .001ms !important; }
+}
