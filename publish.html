@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>发布信息 - 校园失物招领</title>
+    <link rel="stylesheet" href="./css/style.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-title">校园失物招领</div>
+        <div class="nav-menu">
+            <a href="index.html">首页</a>
+            <a href="publish.html">发布信息</a>
+        </div>
+    </nav>
+    <main class="container">
+        <div class="form-wrap">
+            <h2>发布失物/招领信息</h2>
+            <form id="publish-form">
+                <div class="form-item">
+                    <label>类型</label>
+                    <select id="type">
+                        <option value="lost">寻物启事（我丢了东西）</option>
+                        <option value="found">招领启事（我捡到东西）</option>
+                    </select>
+                </div>
+                <div class="form-item">
+                    <label>物品名称</label>
+                    <input type="text" id="name" placeholder="例如：黑色校园卡" required>
+                </div>
+                <div class="form-item">
+                    <label>丢失/捡到地点</label>
+                    <input type="text" id="place" placeholder="图书馆三楼、食堂门口" required>
+                </div>
+                <div class="form-item">
+                    <label>物品描述</label>
+                    <textarea id="desc" rows="4" placeholder="描述物品特征，颜色、标识等"></textarea>
+                </div>
+                <div class="form-item">
+                    <label>联系方式</label>
+                    <input type="text" id="contact" placeholder="手机号/QQ号" required>
+                </div>
+                <button class="submit-btn" type="submit">提交发布</button>
+            </form>
+        </div>
+    </main>
+    <script src="./js/data.js"></script>
+    <script src="./js/publish.js"></script>
+</body>
+</html>
