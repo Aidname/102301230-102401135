@@ -1,51 +1,150 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>发布信息 - 校园失物招领</title>
-    <link rel="stylesheet" href="./css/style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="description" content="发布寻物启事或招领启事。招领信息可以出 3~5 道只有物主答得对的客观题，防止冒领。">
+<title>发布信息 · 校园失物招领</title>
+<link rel="stylesheet" href="css/tokens.css">
+<link rel="stylesheet" href="css/components.css">
+<link rel="stylesheet" href="css/layout.css">
 </head>
 <body>
-    <nav class="navbar">
-        <div class="nav-title">校园失物招领</div>
-        <div class="nav-menu">
-            <a href="index.html">首页</a>
-            <a href="publish.html">发布信息</a>
+
+<div id="app-nav"></div>
+
+<main class="page">
+  <div id="app-banner"></div>
+
+  <div class="page-head">
+    <h1 id="pageTitle">发布信息</h1>
+    <p id="pageSub">寻物启事和招领启事共用一套表单，区别只在「我丢了」还是「我捡到了」。</p>
+  </div>
+
+  <div class="backbar">
+    <a href="index.html">← 返回首页</a>
+    <span id="draftTip" class="hint"></span>
+  </div>
+
+  <div id="errorBox"></div>
+
+  <form class="form" id="publishForm" novalidate>
+
+    <div class="field">
+      <label>信息类型 <span class="req">*</span></label>
+      <div class="type-picker" id="typePicker">
+        <button class="type-option" type="button" data-type="lost">
+          <span class="to-title">🔍 寻物</span>
+          <span class="to-desc">我丢了东西，希望捡到的人联系我</span>
+        </button>
+        <button class="type-option" type="button" data-type="found">
+          <span class="to-title">🙋 招领</span>
+          <span class="to-desc">我捡到东西，想找到它的主人</span>
+        </button>
+      </div>
+      <div class="field-error" id="err-type" hidden></div>
+    </div>
+
+    <div class="field" id="f-title">
+      <label for="fTitle">物品名称 <span class="req">*</span>
+        <span class="hint">2~40 字，写清是什么东西</span></label>
+      <input class="input" id="fTitle" type="text" maxlength="60"
+             placeholder="例如：白色 AirPods Pro、校园卡一张">
+      <div class="counter" id="c-title"></div>
+      <div class="field-error" id="err-title" hidden></div>
+    </div>
+
+    <div class="field" id="f-category">
+      <label>物品分类 <span class="req">*</span></label>
+      <div class="chips" id="categoryPicker"></div>
+      <div class="hint">分类决定要不要出认领验证题，也决定失主该按什么关键词搜。</div>
+      <div class="field-error" id="err-category" hidden></div>
+    </div>
+
+    <div class="field" id="f-location">
+      <label for="fLocation">丢失 / 拾取地点 <span class="req">*</span></label>
+      <input class="input" id="fLocation" type="text" maxlength="60" list="locationList"
+             placeholder="越具体越好，例如：图书馆三楼自习区靠窗那排">
+      <datalist id="locationList"></datalist>
+      <div class="field-error" id="err-location" hidden></div>
+    </div>
+
+    <div class="field" id="f-happenedAt">
+      <label for="fHappenedAt">丢失 / 拾取日期 <span class="req">*</span></label>
+      <input class="input" id="fHappenedAt" type="date">
+      <div class="field-error" id="err-happenedAt" hidden></div>
+    </div>
+
+    <div class="field" id="f-description">
+      <label for="fDescription">详细描述
+        <span class="hint">≤200 字。招领信息请<strong>不要</strong>写只有物主才知道的细节——那正是验证题要问的</span></label>
+      <textarea class="textarea" id="fDescription" maxlength="400"
+                placeholder="补充外观、颜色、有无标记等公开可见的信息"></textarea>
+      <div class="counter" id="c-description"></div>
+      <div class="field-error" id="err-description" hidden></div>
+    </div>
+
+    <div class="field" id="f-photo">
+      <label for="fPhoto">物品照片 <span class="hint">选填，会自动压缩后存在本机</span></label>
+      <div class="photo-box">
+        <div id="photoPreview" class="photo-empty">暂无照片</div>
+        <div>
+          <input class="input" id="fPhoto" type="file" accept="image/*" style="padding:8px">
+          <button class="btn btn-sm" id="removePhoto" type="button" style="margin-top:8px">移除照片</button>
         </div>
-    </nav>
-    <main class="container">
-        <div class="form-wrap">
-            <h2>发布失物/招领信息</h2>
-            <form id="publish-form">
-                <div class="form-item">
-                    <label>类型</label>
-                    <select id="type">
-                        <option value="lost">寻物启事（我丢了东西）</option>
-                        <option value="found">招领启事（我捡到东西）</option>
-                    </select>
-                </div>
-                <div class="form-item">
-                    <label>物品名称</label>
-                    <input type="text" id="name" placeholder="例如：黑色校园卡" required>
-                </div>
-                <div class="form-item">
-                    <label>丢失/捡到地点</label>
-                    <input type="text" id="place" placeholder="图书馆三楼、食堂门口" required>
-                </div>
-                <div class="form-item">
-                    <label>物品描述</label>
-                    <textarea id="desc" rows="4" placeholder="描述物品特征，颜色、标识等"></textarea>
-                </div>
-                <div class="form-item">
-                    <label>联系方式</label>
-                    <input type="text" id="contact" placeholder="手机号/QQ号" required>
-                </div>
-                <button class="submit-btn" type="submit">提交发布</button>
-            </form>
+      </div>
+      <div class="field-error" id="err-photo" hidden></div>
+    </div>
+
+    <fieldset class="fieldset" id="quizFieldset">
+      <legend id="quizLegend">认领验证题</legend>
+      <div id="quizHelp"></div>
+      <div class="q-list" id="questionList"></div>
+      <div class="toolbar" id="quizTools" style="margin-top:12px">
+        <button class="btn btn-sm" id="addJudge" type="button">＋ 判断题</button>
+        <button class="btn btn-sm" id="addChoice" type="button">＋ 选择题</button>
+        <span class="spacer"></span>
+        <label class="hint" for="templateSelect">插入分类模板：</label>
+        <select class="select" id="templateSelect" style="width:auto"></select>
+      </div>
+      <div class="field-error" id="err-questions" hidden></div>
+    </fieldset>
+
+    <fieldset class="fieldset">
+      <legend>联系方式</legend>
+      <div class="form" style="gap:12px">
+        <div class="field" id="f-contactName">
+          <label for="fContactName">你的称呼 <span class="req">*</span></label>
+          <input class="input" id="fContactName" type="text" maxlength="30" placeholder="例如：林同学">
+          <div class="hint">对未通过验证的人，这里会显示成「林**」。</div>
+          <div class="field-error" id="err-contactName" hidden></div>
         </div>
-    </main>
-    <script src="./js/data.js"></script>
-    <script src="./js/publish.js"></script>
+        <div class="field" id="f-contactWay">
+          <label for="fContactWay">联系方式 <span class="req">*</span></label>
+          <input class="input" id="fContactWay" type="text" maxlength="60"
+                 placeholder="手机号 / QQ / 微信号 / 邮箱">
+          <div class="hint" id="contactHint"></div>
+          <div class="field-error" id="err-contactWay" hidden></div>
+        </div>
+      </div>
+    </fieldset>
+
+    <div class="toolbar">
+      <button class="btn btn-primary btn-lg" id="submitBtn" type="submit">立即发布</button>
+      <button class="btn btn-lg" id="saveDraftBtn" type="button">存为草稿</button>
+      <button class="btn btn-ghost btn-lg" id="clearDraftBtn" type="button">放弃草稿</button>
+      <span class="spacer"></span>
+      <a class="btn btn-ghost" href="index.html">取消</a>
+    </div>
+    <p class="hint" id="editTip" hidden>编辑模式下不会改变发布时间、浏览量和已收到的认领记录。</p>
+  </form>
+</main>
+
+<script src="js/config.js"></script>
+<script src="js/utils.js"></script>
+<script src="js/seed.js"></script>
+<script src="js/store.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/page-publish.js"></script>
 </body>
 </html>
