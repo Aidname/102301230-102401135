@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<meta name="description" content="失物招领信息详情：完整描述、联系方式（招领信息需通过认领验证后可见）与状态维护。">
-<title>信息详情 · 校园失物招领</title>
+<meta name="description" content="认领验证结果：通过则展示凭证码与解锁的联系方式，未通过只提示剩余次数。">
+<title>验证结果 · 校园失物招领</title>
 <link rel="stylesheet" href="css/tokens.css">
 <link rel="stylesheet" href="css/components.css">
 <link rel="stylesheet" href="css/layout.css">
@@ -15,8 +15,7 @@
 
 <main class="page">
   <div id="app-banner"></div>
-  <div class="backbar" id="backBar"></div>
-  <div id="detailHost"></div>
+  <div id="resultHost"></div>
 </main>
 
 <script src="js/config.js"></script>
@@ -24,6 +23,6 @@
 <script src="js/seed.js"></script>
 <script src="js/store.js"></script>
 <script src="js/ui.js"></script>
-<script src="js/page-detail.js"></script>
+<script src="js/page-verify-result.js"></script>
 </body>
 </html>

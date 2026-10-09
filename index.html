@@ -1,35 +1,86 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>校园失物招领</title>
-    <link rel="stylesheet" href="./css/style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="description" content="校园失物招领：集中展示校园内的寻物启事与招领启事，支持关键词搜索、分类筛选与认领验证。">
+<title>校园失物招领 · 浏览信息</title>
+<link rel="stylesheet" href="css/tokens.css">
+<link rel="stylesheet" href="css/components.css">
+<link rel="stylesheet" href="css/layout.css">
 </head>
 <body>
-    <nav class="navbar">
-        <div class="nav-title">校园失物招领</div>
-        <div class="nav-menu">
-            <a href="index.html">首页</a>
-            <a href="publish.html">发布信息</a>
-        </div>
-    </nav>
-    <main class="container">
-        <div class="search-area">
-            <input type="text" id="search-input" placeholder="输入物品名称搜索...">
-            <button id="search-btn">搜索</button>
-        </div>
-        <div class="tab-wrap">
-            <button class="tab-item active" data-type="all">全部</button>
-            <button class="tab-item" data-type="lost">寻物</button>
-            <button class="tab-item" data-type="found">招领</button>
-        </div>
-        <div id="list-wrap" class="list-wrap">
-            <!-- 物品卡片JS渲染 -->
-            <div class="empty-tip">暂无失物招领信息</div>
-        </div>
-    </main>
-    <script src="./js/data.js"></script>
-    <script src="./js/index.js"></script>
+
+<div id="app-nav"></div>
+
+<main class="page">
+  <div id="app-banner"></div>
+
+  <!-- 首页的搜索入口。注意这个类名和搜索页真正的输入框（.search-input）是分开的，
+       上一条"桌面端把搜索框一起藏掉"的教训就出在两者共用一个类名上。 -->
+  <a class="home-search-entry" href="search.html">
+    <span>🔍</span><span>搜一搜：物品名称、地点、分类……</span>
+  </a>
+
+  <div class="layout-split">
+    <!-- 筛选区：窄屏是折叠的横向筛选条，宽屏是左侧吸顶栏，同一份 DOM -->
+    <aside class="side" id="side">
+      <button class="btn btn-sm filter-toggle" id="filterToggle" type="button">
+        筛选与热门 <span class="caret">▾</span>
+      </button>
+
+      <div class="panel">
+        <h3>物品分类</h3>
+        <div class="cat-strip" id="catStrip"></div>
+      </div>
+
+      <div class="panel filter-more">
+        <h3>丢失 / 拾取地点</h3>
+        <div class="chips" id="locChips"></div>
+      </div>
+
+      <div class="panel filter-more">
+        <h3>当前状态</h3>
+        <div class="chips" id="statusChips"></div>
+      </div>
+
+      <div class="panel filter-more">
+        <h3>热门搜索</h3>
+        <div class="chips" id="hotChips"></div>
+        <p class="hint" style="margin-top:8px">按真实数据统计得出，不是写死的词表。</p>
+      </div>
+    </aside>
+
+    <div class="main">
+      <div class="tabs-inline" id="typeTabs"></div>
+
+      <div class="toolbar">
+        <span id="resultCount" class="hint"></span>
+        <span class="spacer"></span>
+        <label class="sr-only" for="sortSelect">排序方式</label>
+        <select class="select" id="sortSelect" style="width:auto">
+          <option value="newest">最新发布</option>
+          <option value="oldest">最早发布</option>
+          <option value="hot">最多浏览</option>
+        </select>
+        <button class="btn btn-sm" id="resetBtn" type="button">重置筛选</button>
+      </div>
+
+      <!-- 选中分类时出现：告诉失主"这一类该按什么搜、什么搜不到" -->
+      <div id="hintBox"></div>
+
+      <div id="listHost"></div>
+
+      <button class="load-more" id="loadMore" type="button" hidden></button>
+    </div>
+  </div>
+</main>
+
+<script src="js/config.js"></script>
+<script src="js/utils.js"></script>
+<script src="js/seed.js"></script>
+<script src="js/store.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/page-index.js"></script>
 </body>
 </html>

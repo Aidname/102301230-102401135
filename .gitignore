@@ -1,0 +1,26 @@
+# 操作系统生成的临时文件
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+.DS_Store
+*~
+
+# 编辑器 / IDE
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# 依赖与构建产物（本项目运行时不需要任何依赖，出现这些说明是本地调试装的）
+node_modules/
+package-lock.json
+pnpm-lock.yaml
+.venv/
+__pycache__/
+*.pyc
+
+# 本地草稿与临时文件
+*.tmp
+*.log
+_tmp/
+.tmp/

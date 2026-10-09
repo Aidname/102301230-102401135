@@ -1,0 +1,295 @@
+/*!
+ * layout.css —— 页面骨架与响应式布局
+ *
+ * 一套 HTML 同时服务两种形态：
+ *   · 宽屏（≥900px）：桌面网页版 —— 顶部导航 + 左侧筛选栏 + 右侧卡片网格；
+ *   · 窄屏（<900px） ：手机版 —— 顶部标题栏 + 底部 Tab 栏 + 单列卡片。
+ * 只用一个断点，避免中间态出现"两边都不像"的布局。
+ *
+ * 一个踩过的坑记录在这里：**不要给两种不同用途的元素起同一个类名**。
+ * 早先首页那个"长得像搜索框"的入口链接和搜索页真正的输入框都叫 .searchbox，
+ * 结果桌面端一条 `.searchbox{display:none}` 把真正的输入框一起藏掉了——
+ * 页面没报错、测试也全绿，用户却一个字都打不进去。
+ * 所以这里入口叫 .home-search-entry，真输入框叫 .search-input，各管各的。
+ */
+
+/* ============================================================
+ * 顶部标题栏 + 导航
+ * ============================================================ */
+
+.topbar {
+  background: var(--c-surface);
+  border-bottom: 1px solid var(--c-border);
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+
+.topbar-inner,
+.topbar > .brand,
+.topbar > .topnav {
+  /* 兼容两种结构：直接子元素 或 .topbar-inner 包裹 */
+}
+
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-4);
+  padding: 0 var(--sp-4);
+  height: var(--nav-h);
+  max-width: 100%;
+}
+
+.brand { display: flex; align-items: center; gap: 10px; color: inherit; flex: none; }
+.brand:hover { color: inherit; }
+.brand-mark {
+  width: 34px; height: 34px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, var(--c-primary), #5b8cf8);
+  color: #fff;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 700;
+  font-size: var(--f-lg);
+  flex: none;
+}
+.brand-text { display: none; flex-direction: column; line-height: 1.15; }
+.brand-text b { font-size: var(--f-lg); }
+.brand-text i { font-style: normal; font-size: 11px; color: var(--c-text-3); }
+
+.topnav { display: none; align-items: center; gap: var(--sp-1); }
+.topnav a {
+  padding: 7px 12px;
+  border-radius: var(--r-sm);
+  color: var(--c-text-2);
+  font-size: var(--f-md);
+  font-weight: 500;
+  white-space: nowrap;
+}
+.topnav a:hover { background: var(--c-border-2); color: var(--c-text); }
+.topnav a.on { color: var(--c-primary); background: var(--c-primary-soft); }
+.topnav a.btn-primary { color: #fff; }
+.topnav a.btn-primary:hover { color: #fff; background: var(--c-primary-dark); }
+
+/* ============================================================
+ * 底部 Tab 栏（仅窄屏）
+ * ============================================================ */
+
+.tabbar {
+  position: fixed;
+  left: 0; right: 0; bottom: 0;
+  height: calc(var(--tab-h) + env(safe-area-inset-bottom, 0px));
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+  background: rgba(255, 255, 255, .97);
+  backdrop-filter: blur(8px);
+  border-top: 1px solid var(--c-border);
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  z-index: 60;
+}
+.tabbar .tab {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  color: var(--c-text-3);
+  font-size: 11px;
+}
+.tabbar .tab.active { color: var(--c-primary); font-weight: 600; }
+.tabbar .tab-icon { font-size: 19px; line-height: 1; }
+.tabbar .tab-plus {
+  width: 34px; height: 34px;
+  border-radius: 50%;
+  background: var(--c-primary);
+  color: #fff;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 19px;
+  line-height: 1;
+  margin-bottom: 1px;
+}
+
+/* ============================================================
+ * 容器与页面骨架
+ * ============================================================ */
+
+.page {
+  max-width: var(--page-max);
+  margin: 0 auto;
+  padding: var(--sp-4);
+}
+
+.page-head { margin-bottom: var(--sp-4); }
+.page-head h1 { font-size: var(--f-2xl); margin-bottom: 4px; }
+.page-head p { color: var(--c-text-3); font-size: var(--f-sm); }
+
+/* 同一套筛选 DOM 服务两种形态：
+ *   窄屏 —— 排成横向可滑动的筛选条，次要筛选折叠进「筛选」按钮，不占满屏；
+ *   宽屏 —— 变成左侧吸顶筛选栏。
+ * 刻意不写两份筛选 HTML：两份就一定会不同步（改了一边忘了另一边）。 */
+.layout-split { display: block; }
+.main { min-width: 0; }
+.side .panel { margin-bottom: var(--sp-3); }
+.side .filter-more { display: none; }
+.side.expanded .filter-more { display: block; }
+
+.filter-toggle { margin-bottom: var(--sp-3); }
+.filter-toggle .caret { transition: transform .15s; }
+.side.expanded + .main .filter-toggle .caret,
+.filter-toggle.on .caret { transform: rotate(180deg); }
+
+/* 返回条 */
+.backbar { margin-bottom: var(--sp-3); display: flex; align-items: center; gap: var(--sp-3); flex-wrap: wrap; }
+.backbar a { font-size: var(--f-sm); color: var(--c-text-2); }
+.backbar a:hover { color: var(--c-primary); }
+
+/* ============================================================
+ * 首页：搜索入口
+ * ============================================================ */
+
+.home-search-entry {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  padding: 12px var(--sp-4);
+  border: 1px solid var(--c-border);
+  border-radius: var(--r-full);
+  background: var(--c-surface);
+  color: var(--c-text-3);
+  font-size: var(--f-md);
+  margin-bottom: var(--sp-4);
+  box-shadow: var(--sh-1);
+}
+.home-search-entry:hover { border-color: var(--c-primary-line); color: var(--c-text-2); }
+
+/* 搜索页真正的输入框 */
+.search-bar {
+  display: flex;
+  gap: var(--sp-2);
+  margin-bottom: var(--sp-3);
+}
+.search-input {
+  flex: 1;
+  padding: 12px var(--sp-4);
+  border: 1px solid var(--c-border);
+  border-radius: var(--r-full);
+  background: var(--c-surface);
+  font-size: var(--f-md);
+}
+.search-input:focus {
+  outline: none;
+  border-color: var(--c-primary);
+  box-shadow: 0 0 0 3px var(--c-primary-soft);
+}
+
+/* 首页分类图标条 */
+.cat-strip {
+  display: flex;
+  gap: var(--sp-2);
+  overflow-x: auto;
+  padding-bottom: 6px;
+  margin-bottom: var(--sp-3);
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+}
+.cat-strip::-webkit-scrollbar { height: 4px; }
+.cat-strip::-webkit-scrollbar-thumb { background: var(--c-border); border-radius: 2px; }
+
+.cat-tile {
+  flex: none;
+  min-width: 74px;
+  padding: 10px 8px;
+  border: 1px solid var(--c-border);
+  border-radius: var(--r-md);
+  background: var(--c-surface);
+  text-align: center;
+  cursor: pointer;
+  transition: all .15s;
+}
+.cat-tile:hover { border-color: var(--c-primary-line); }
+.cat-tile.active { border-color: var(--c-primary); background: var(--c-primary-soft); }
+.cat-tile .ct-icon { font-size: 22px; line-height: 1.2; }
+.cat-tile .ct-name { font-size: var(--f-xs); color: var(--c-text-2); margin-top: 2px; }
+.cat-tile.active .ct-name { color: var(--c-primary); font-weight: 600; }
+.cat-tile .ct-count { font-size: 11px; color: var(--c-text-4); }
+
+/* ============================================================
+ * 宽屏适配
+ * ============================================================ */
+
+@media (min-width: 900px) {
+  body { padding-bottom: 0; }
+
+  .topbar { padding: 0 var(--sp-6); }
+  .brand-text { display: flex; }
+  .topnav { display: flex; }
+  .tabbar { display: none; }
+
+  .page { padding: var(--sp-6); }
+
+  /* 首页两栏：左侧筛选栏吸顶，右侧卡片网格 */
+  .layout-split {
+    display: grid;
+    grid-template-columns: 236px minmax(0, 1fr);
+    gap: var(--sp-5);
+    align-items: start;
+  }
+  .side {
+    position: sticky;
+    top: calc(var(--nav-h) + var(--sp-4));
+    max-height: calc(100vh - var(--nav-h) - var(--sp-8));
+    overflow-y: auto;
+  }
+  .side .panel { padding: var(--sp-4); margin-bottom: var(--sp-3); }
+  .side .panel h3 { font-size: var(--f-md); }
+  .side .filter-more { display: block; }
+  .filter-toggle { display: none; }
+
+  /* 手机上横向滚动的分类条，在宽屏下变成侧栏里的两列网格 */
+  .cat-strip {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    overflow: visible;
+    gap: 6px;
+  }
+  .cat-tile { min-width: 0; padding: 8px 4px; }
+  .cat-tile .ct-icon { font-size: 18px; }
+
+  /* 宽屏下卡片信息量更大，一行两条 */
+  .card-list { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--sp-4); }
+
+  .home-search-entry { display: none; }
+  .filters-mobile { display: none; }
+
+  .quiz-submit { bottom: var(--sp-4); }
+
+  #app-toast { bottom: 40px; }
+}
+
+@media (min-width: 1280px) {
+  .card-list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+/* 窄屏专用：筛选条横向滚动 */
+.filters-mobile { margin-bottom: var(--sp-3); }
+.filter-row {
+  display: flex;
+  gap: var(--sp-2);
+  overflow-x: auto;
+  padding-bottom: 6px;
+  margin-bottom: 6px;
+  -webkit-overflow-scrolling: touch;
+}
+.filter-row::-webkit-scrollbar { height: 0; }
+.filter-row .chips { flex-wrap: nowrap; }
+
+@media (min-width: 900px) {
+  .filter-row { overflow: visible; }
+}
+
+/* 打印：把底部 tab、按钮都去掉，方便直接打印一条信息贴到公告栏 */
+@media print {
+  .topbar, .tabbar, .card-actions, .quiz-submit, #app-toast { display: none !important; }
+  body { background: #fff; padding: 0; }
+  .card, .panel { box-shadow: none; border-color: #ccc; }
+}

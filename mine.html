@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="description" content="我的：个人资料、发布统计、我的发布管理、认领申诉人工审核与本地数据管理。">
+<title>我的 · 校园失物招领</title>
+<link rel="stylesheet" href="css/tokens.css">
+<link rel="stylesheet" href="css/components.css">
+<link rel="stylesheet" href="css/layout.css">
+</head>
+<body>
+
+<div id="app-nav"></div>
+
+<main class="page">
+  <div id="app-banner"></div>
+
+  <div class="page-head">
+    <h1>我的</h1>
+    <p>没有账号体系，所以这里靠一个存在本机的发布者标识来区分"谁发的"。</p>
+  </div>
+
+  <!-- 个人资料 -->
+  <div class="panel">
+    <div class="panel-head">
+      <h3 id="profileName">未填写称呼</h3>
+      <button class="btn btn-sm" id="editProfileBtn" type="button">编辑资料</button>
+    </div>
+    <div id="profileBody"></div>
+    <p class="hint" style="margin-top:10px">
+      本机发布者标识：<code id="ownerId"></code>　
+      这个标识存在本机，用来判断"哪些信息是我发的"，不涉及任何账号注册。
+    </p>
+  </div>
+
+  <!-- 统计 -->
+  <div class="panel">
+    <h3>发布统计</h3>
+    <div class="stat-grid" id="statGrid"></div>
+  </div>
+
+  <!-- 我的发布 -->
+  <div class="panel">
+    <div class="panel-head">
+      <h3>我的发布</h3>
+      <a class="btn btn-sm btn-primary" href="publish.html">＋ 发布信息</a>
+    </div>
+    <div class="tabs-inline" id="mineTabs"></div>
+    <div id="mineListHost"></div>
+  </div>
+
+  <!-- 人工审核 -->
+  <div class="panel" id="appealPanel">
+    <div class="panel-head">
+      <h3>人工审核</h3>
+      <span class="hint" id="appealHint"></span>
+    </div>
+    <div id="appealHost"></div>
+  </div>
+
+  <!-- 本地数据管理 -->
+  <div class="panel">
+    <h3>本地数据</h3>
+    <p class="hint">
+      本项目没有后端，数据全部保存在这台设备的浏览器里（localStorage）。
+      换设备、换浏览器、清除浏览器数据都会看不到这些内容，所以提供了导出/导入。
+    </p>
+    <div id="storageInfo"></div>
+    <div class="toolbar" style="margin-top:12px">
+      <button class="btn" id="exportBtn" type="button">导出为 JSON</button>
+      <button class="btn" id="importBtn" type="button">导入 JSON</button>
+      <button class="btn" id="seedBtn" type="button">恢复演示数据</button>
+      <button class="btn btn-danger" id="clearBtn" type="button">清空全部数据</button>
+    </div>
+    <input type="file" id="importFile" accept=".json,application/json" hidden>
+  </div>
+</main>
+
+<script src="js/config.js"></script>
+<script src="js/utils.js"></script>
+<script src="js/seed.js"></script>
+<script src="js/store.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/page-mine.js"></script>
+</body>
+</html>

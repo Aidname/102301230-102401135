@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="description" content="发布成功：查看刚发布的信息摘要，以及系统自动匹配到的相关信息。">
+<title>发布成功 · 校园失物招领</title>
+<link rel="stylesheet" href="css/tokens.css">
+<link rel="stylesheet" href="css/components.css">
+<link rel="stylesheet" href="css/layout.css">
+</head>
+<body>
+
+<div id="app-nav"></div>
+
+<main class="page">
+  <div id="app-banner"></div>
+
+  <div class="result-hero is-ok">
+    <div class="icon">🎉</div>
+    <h2 id="heroTitle">发布成功</h2>
+    <p id="heroSub">信息已经进入列表，其他同学可以搜索到了。</p>
+    <div id="codeBox" style="margin-top:12px"></div>
+  </div>
+
+  <div class="panel">
+    <h3>你发布的信息</h3>
+    <div id="summaryHost"></div>
+    <div class="toolbar" style="margin-top:16px;margin-bottom:0">
+      <a class="btn btn-primary" id="viewBtn" href="index.html">查看详情</a>
+      <a class="btn" href="mine.html">去「我的发布」管理</a>
+      <a class="btn" href="publish.html">再发一条</a>
+      <span class="spacer"></span>
+      <a class="btn btn-ghost" href="index.html">返回首页</a>
+    </div>
+  </div>
+
+  <!-- 智能配对：不做聊天、不做地图，就用这一步把"丢的人"和"捡的人"第一次关联起来 -->
+  <section id="matchSection" hidden>
+    <div class="panel">
+      <div class="panel-head">
+        <h3>🔗 可能相关的信息</h3>
+        <span class="hint">类型相反 + 分类相同 + 标题有两字重合，最多 3 条</span>
+      </div>
+      <div id="matchHost"></div>
+    </div>
+  </section>
+</main>
+
+<script src="js/config.js"></script>
+<script src="js/utils.js"></script>
+<script src="js/seed.js"></script>
+<script src="js/store.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/page-success.js"></script>
+</body>
+</html>
